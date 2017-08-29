@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{14D0A637-85BF-4D04-BCC5-C42B76C0306F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WorkUtiliteRmastered</RootNamespace>
+    <AssemblyName>WorkUtilityRmastered</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\Марина\Desktop\work\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>9A26DC85DC26A84438034F80C963EB215312C32D</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>WorkUtilityRmastered_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.97.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.97.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\System.Data.SQLite.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.97.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="addTask.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="addTask.designer.cs">
+      <DependentUpon>addTask.cs</DependentUpon>
+    </Compile>
+    <Compile Include="clientFinder.cs" />
+    <Compile Include="clientSearcher.cs" />
+    <Compile Include="dataAdapters.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dataInMemory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditDevice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditDevice.designer.cs">
+      <DependentUpon>EditDevice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="firstRun.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="firstRun.Designer.cs">
+      <DependentUpon>firstRun.cs</DependentUpon>
+    </Compile>
+    <Compile Include="generalForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="generalForm.Designer.cs">
+      <DependentUpon>generalForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="gettingData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderForm.Designer.cs">
+      <DependentUpon>orderForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Print.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="searchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="searchForm.designer.cs">
+      <DependentUpon>searchForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="settingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="settingsForm.Designer.cs">
+      <DependentUpon>settingsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="tasksTimer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="workersMethods.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <EmbeddedResource Include="addTask.resx">
+      <DependentUpon>addTask.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditDevice.resx">
+      <DependentUpon>EditDevice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="firstRun.resx">
+      <DependentUpon>firstRun.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="generalForm.resx">
+      <DependentUpon>generalForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderForm.resx">
+      <DependentUpon>orderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="searchForm.resx">
+      <DependentUpon>searchForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="settingsForm.resx">
+      <DependentUpon>settingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="WorkUtilityRmastered_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\Actions-document-edit-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\search-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\Button-Ok-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\Button-Delete-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\print-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\Button-Add-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\Eject-Pressed-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Клиентский профиль Microsoft .NET Framework 4 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>Клиентский профиль .NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Установщик Windows 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="icon.ico" />
+    <None Include="wav\missedTask.wav" />
+    <None Include="wav\alarm.wav" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

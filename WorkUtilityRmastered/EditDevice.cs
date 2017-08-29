@@ -1,0 +1,267 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using WorkUtiliteRmastered;
+
+namespace WorkUtiliteRmastered
+{
+    public partial class EditDevice : Form
+    {
+        DataRow workingRow;
+        bool edit = false; // по умолчанию создаем новую запись
+        int ownerId = 0; // fuck:(
+
+        public EditDevice(DataRow inRow)
+        {
+            if (inRow != null)//если при инцициализации получена строка, то запоминаем её
+            {
+                workingRow = inRow;
+                ownerId = int.Parse(inRow["id"].ToString());
+                edit = true;
+            }
+            else {
+                workingRow = generalForm.data.Tables["devices"].NewRow();
+            }
+          
+           InitializeComponent();
+        }
+
+        private void okButton_Click(object sender, EventArgs e)
+        {
+           //обработка оборудования
+           if (deviceTextBox.Text.Trim() != "" && defectTextBox.Text.Trim() != ""){//Сначала проверим заполнение полей
+               // обработка владельца
+               if (ownerId == 0)
+               {
+                   generalForm.data.Tables["clients"].Rows.Add(
+                    null,
+                    ownerTextBox.Text,
+                    ownerTelTextBox.Text);
+
+                   ownerId = int.Parse(generalForm.data.Tables["clients"].Rows[generalForm.data.Tables["clients"].Rows.Count - 1]["id"].ToString());
+               }
+               else
+               {
+                   generalForm.data.Tables["clients"].Select("id = " + ownerId)[0]["tel"] = ownerTelTextBox.Text;
+               }
+
+               if (edit)
+               {
+                   System.Console.WriteLine("Ветка с редактированием");
+                   workingRow["device"] = deviceTextBox.Text;
+                   workingRow["owner"] = ownerId; // Заглушка
+                   workingRow["price"] = priceNumericUpDown.Value;
+                   workingRow["paid"] = paidCheckBox.Checked;
+                   workingRow["defect"] = defectTextBox.Text;
+                if (issueCheckBox.Checked != Boolean.Parse(workingRow["issue"].ToString())){
+                    if (issueCheckBox.Checked == true)
+                    {
+                        workingRow["issue"] = true;
+                        workingRow["issue_date"] = System.DateTime.Now.Date.ToString("dd.MM.yy");
+                    }
+                    else
+                    {
+                        workingRow["issue"] = false;
+                        workingRow["issue_date"] = "";
+                    }
+                }
+               }
+               else {
+                   System.Console.WriteLine("Ветка с новым");
+                   workingRow["date"] = System.DateTime.Now.Date.ToString("dd.MM.yy");
+                   workingRow["device"] = deviceTextBox.Text;
+                   workingRow["owner"] = ownerId;
+                   workingRow["price"] = priceNumericUpDown.Value;
+                   workingRow["paid"] = paidCheckBox.Checked;
+                   workingRow["defect"] = defectTextBox.Text;
+                   workingRow["issue"] = false;
+                   workingRow["issue_date"] = "";
+
+                  generalForm.data.Tables["devices"].Rows.Add(workingRow);
+
+               }
+               this.DialogResult = DialogResult.OK;
+            }
+            else {
+                MessageBox.Show("Не все поля заполнены \n Обязательные поля помечены знаком '*'");
+            }
+        }
+
+        private void EditDevice_Load(object sender, EventArgs e)
+        {
+            fillFields();
+            printTable();
+
+            if (edit) {
+                label7.Visible = true;
+                issueCheckBox.Visible = true;
+            }
+        }
+
+        private void ownerTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (equalClient(ownerTextBox.Text.Trim()))
+            {
+                ownerTelTextBox.Text = tryGetPhone(ownerTextBox.Text.Trim());//устанавливаем owner ID и телефон
+                ownerId = int.Parse(generalForm.data.Tables["clients"].Select("name ='" + ownerTextBox.Text.Trim() + "'")[0]["id"].ToString()) ;
+            }
+            else {
+                if (checkClient(ownerTextBox.Text.Trim())) {
+                    int startIndex = ownerTextBox.Text.Length;
+                    string con = getCondidat(ownerTextBox.Text.Trim()).Substring(startIndex);
+
+                    ownerTextBox.Text += con;
+                    ownerTextBox.Select(startIndex, con.Length);
+                }
+                ownerId = 0;
+                ownerTelTextBox.Text = "";
+            }
+            System.Console.WriteLine("current ID: " + ownerId);
+
+        }
+        
+        /*string userInput = ownerTextBox.Text;
+                string autogeneratedString;
+
+                //попробуем отыскать подящую строку в таблице
+                try
+                {
+                    DataRow[] rows;
+                    rows = generalForm.data.Tables["clients"].Select("name like '" + ownerTextBox.Text + "*'");//Берем верхнюю строчку
+                    
+                    //добавляем к введенной строке недостающую часть 
+                    int startIndex = ownerTextBox.Text.Length;//место где заканчивается введенная строка
+                    autogeneratedString = (rows[0]["name"].ToString()).Substring(startIndex); // недостающей кусочек строки
+
+                    ownerTextBox.Text += autogeneratedString;//соединяем строки
+                    ownerTextBox.Select(ownerTextBox.Text.Length, autogeneratedString.Length * -1);//выделяем недостающий кусочек
+
+                    if (ownerTextBox.Text.Trim().Equals((ownerTextBox.Text.Substring(0, ownerTextBox.Text.Length - ownerTextBox.SelectionLength))))//Если введен существующий пользователь то устанавливаем user id и телефон
+                    {
+                        ownerTelTextBox.Text = rows[0]["tel"].ToString();
+                        ownerId = int.Parse(rows[0]["id"].ToString());
+
+                        System.Console.WriteLine(ownerTextBox.Text.Trim().Equals((ownerTextBox.Text.Substring(0, ownerTextBox.Text.Length - ownerTextBox.SelectionLength))));
+                    }
+                    else
+                    {
+                        System.Console.WriteLine(ownerTextBox.Text.Trim().Equals((ownerTextBox.Text.Substring(0, ownerTextBox.Text.Length - ownerTextBox.SelectionLength))));
+                        ownerTelTextBox.Text = "";
+                        ownerId = 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Console.WriteLine("Select ничего не вернул. Причина: \n" + ex);
+                }*/
+
+        private void ownerTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Back && ownerTextBox.SelectedText != "" && ownerTextBox.SelectionLength != ownerTextBox.Text.Length)
+            {
+                ownerTextBox.Text = ownerTextBox.Text.Remove(ownerTextBox.SelectionStart -1);
+            }
+
+            if (e.KeyCode == Keys.Right) {
+                try
+                {
+                    ownerTelTextBox.Text = generalForm.data.Tables["clients"].Select("name = '" + ownerTextBox.Text + "'")[0]["tel"].ToString();
+                    ownerId = int.Parse(generalForm.data.Tables["clients"].Select("name = '" + ownerTextBox.Text + "'")[0]["id"].ToString());
+                }
+                catch (Exception ex) {
+                    System.Console.WriteLine(ex);
+                }
+            }
+
+            if (e.KeyCode == Keys.Delete)
+            {
+                ownerTextBox.Text.Remove(ownerTextBox.SelectionStart);
+            }
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+        }
+
+        private bool equalClient(string input) {
+            if (generalForm.data.Tables["clients"].Rows.Count > 0 && generalForm.data.Tables["clients"].Select("name ='" + input + "'").Length != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool checkClient(string client)
+        {
+            if (generalForm.data.Tables["clients"].Rows.Count > 0 && generalForm.data.Tables["clients"].Select("name like '" + client + "*'").Length != 0)
+            {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        private string getCondidat(string input)
+        {
+            try
+            {
+                return generalForm.data.Tables["clients"].Select("name like '" + input + "*'")[0]["name"].ToString();
+            }
+            catch {
+                return null;
+            }
+        }
+
+        private string tryGetPhone(string client)
+        {
+            try
+            {
+                return generalForm.data.Tables["clients"].Select("name = '" + client + "'")[0]["tel"].ToString();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        private void fillFields()
+        {
+            if (edit)
+            {
+                DataRow ownerRow = generalForm.data.Tables["clients"].Select("id =" + workingRow["owner"])[0];
+
+                deviceTextBox.Text = workingRow["device"].ToString();
+                ownerTextBox.Text = ownerRow["name"].ToString();
+                issueCheckBox.Checked = Boolean.Parse(workingRow["issue"].ToString());
+                priceNumericUpDown.Value = int.Parse(workingRow["price"].ToString());
+                paidCheckBox.Checked = Boolean.Parse(workingRow["paid"].ToString());
+                defectTextBox.Text = workingRow["defect"].ToString();
+            }
+        }
+
+        private void printTable()
+        {
+            /*foreach (DataRow row in WorkUtiliteWin.generalForm.data.Tables["clients"].AsEnumerable())
+            {
+                System.Console.WriteLine(row["id"] + " | " + row["name"] + " | " + row["tel"]);
+            }
+            System.Console.WriteLine();*/
+        }
+
+        private void priceNumericUpDown_Click(object sender, EventArgs e)
+        {
+            priceNumericUpDown.Select(0, priceNumericUpDown.Value.ToString().Length);
+        }
+
+    }
+}
